@@ -11,10 +11,25 @@ class App extends Component {
       { id: 1, name: "John", lastname: "Doe", age: 32, sexe: true },
       { id: 2, name: "Khalid", lastname: "Sookia", age: 27, sexe: false },
       { id: 3, name: "Celia", lastname: "m2i", age: 12, sexe: false },
-      { id: 4, name: "Jessica", lastname: "Macron", age: 90, sexe: false },
-      { id: 5, name: "Pierre", lastname: "Paul-Jacques", age: 22, sexe: true },
+      { id: 7, name: "Jessica", lastname: "Macron", age: 90, sexe: false },
+      { id: 11, name: "Pierre", lastname: "Paul-Jacques", age: 22, sexe: true },
     ],
   };
+
+  userBirthdayHandler = (id) => {
+    console.log("Anniversaire de " + id);
+    // On utilise findIndex pour recup l'index de user 
+    const indexUser = this.state.users.findIndex(element => {
+      return element.id === id;
+    })
+
+    const user = {...this.state.users[indexUser]};
+    user.age++;
+    const users = [...this.state.users];
+    users[indexUser] = user;
+    this.setState({users})
+}
+
   render() {
     return (
       <div className="container text-center">
@@ -29,7 +44,7 @@ class App extends Component {
         <div className="row">
           {this.state.users.map((user) => {
             return (
-              <User key={user.id} {...user} birthdayClick={() => console.log("anniversaire du user " + user.name)}>{user}</User>
+              <User key={user.id} {...user} birthdayClick={() => this.userBirthdayHandler(user.id)}>{user}</User>
             );
           })}
 
